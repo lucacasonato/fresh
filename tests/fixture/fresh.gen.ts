@@ -32,12 +32,13 @@ import * as $26 from "./routes/layeredMdw/layer2/layer3/_middleware.ts";
 import * as $27 from "./routes/middleware_root.ts";
 import * as $28 from "./routes/not_found.ts";
 import * as $29 from "./routes/params.tsx";
-import * as $30 from "./routes/props/[id].tsx";
-import * as $31 from "./routes/state-in-props/_middleware.ts";
-import * as $32 from "./routes/state-in-props/index.tsx";
-import * as $33 from "./routes/static.tsx";
-import * as $34 from "./routes/status_overwrite.tsx";
-import * as $35 from "./routes/wildcard.tsx";
+import * as $30 from "./routes/props-in-context/index.tsx";
+import * as $31 from "./routes/props/[id].tsx";
+import * as $32 from "./routes/state-in-props/_middleware.ts";
+import * as $33 from "./routes/state-in-props/index.tsx";
+import * as $34 from "./routes/static.tsx";
+import * as $35 from "./routes/status_overwrite.tsx";
+import * as $36 from "./routes/wildcard.tsx";
 import * as $$0 from "./islands/Counter.tsx";
 import * as $$1 from "./islands/MultipleCounters.tsx";
 import * as $$2 from "./islands/ReturningNull.tsx";
@@ -80,12 +81,13 @@ const manifest = {
     "./routes/middleware_root.ts": $27,
     "./routes/not_found.ts": $28,
     "./routes/params.tsx": $29,
-    "./routes/props/[id].tsx": $30,
-    "./routes/state-in-props/_middleware.ts": $31,
-    "./routes/state-in-props/index.tsx": $32,
-    "./routes/static.tsx": $33,
-    "./routes/status_overwrite.tsx": $34,
-    "./routes/wildcard.tsx": $35,
+    "./routes/props-in-context/index.tsx": $30,
+    "./routes/props/[id].tsx": $31,
+    "./routes/state-in-props/_middleware.ts": $32,
+    "./routes/state-in-props/index.tsx": $33,
+    "./routes/static.tsx": $34,
+    "./routes/status_overwrite.tsx": $35,
+    "./routes/wildcard.tsx": $36,
   },
   islands: {
     "./islands/Counter.tsx": $$0,
