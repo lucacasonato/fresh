@@ -441,6 +441,11 @@ export interface Island {
   exportName: string;
 }
 
+export interface Worker {
+  id: string;
+  url: string;
+}
+
 // --- PLUGINS ---
 
 export interface Plugin<State = Record<string, unknown>> {
