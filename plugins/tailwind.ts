@@ -1,7 +1,7 @@
 import { Plugin, PluginMiddleware, ResolvedFreshConfig } from "../server.ts";
 import type postcss from "npm:postcss@8.4.33";
-import * as path from "https://deno.land/std@0.207.0/path/mod.ts";
-import { walk } from "https://deno.land/std@0.207.0/fs/walk.ts";
+import * as path from "https://deno.land/std@0.211.0/path/mod.ts";
+import { walk } from "https://deno.land/std@0.211.0/fs/walk.ts";
 import { TailwindPluginOptions } from "./tailwind/types.ts";
 
 async function initTailwind(
@@ -39,10 +39,20 @@ export default function tailwind(
 
         let cached = cache.get(pathname);
         if (!cached) {
-          const filePath = path.join(
+          let filePath = path.join(
             staticDir,
             pathname.replace(ctx.config.basePath, ""),
           );
+          try {
+            // this will error if the file doesn't exist
+            await Deno.stat(filePath);
+          } catch (_error) {
+            // if it did, then the user doesn't have styles.css defined
+            // it must then be provided by the plugin
+            const fileUrl = new URL(".", import.meta.url);
+            const directoryPath = path.fromFileUrl(fileUrl);
+            filePath = path.join(directoryPath, "tailwind", "styles.css");
+          }
           let text = "";
           try {
             text = await Deno.readTextFile(filePath);
@@ -124,6 +134,15 @@ export default function tailwind(
 
         await Deno.writeTextFile(outPath, result.content);
       }
+    },
+    staticFiles: {
+      baseLocation: import.meta.url,
+      files: [
+        {
+          path: "./tailwind/styles.css",
+          injectedPath: "/styles.css",
+        },
+      ],
     },
   };
 }

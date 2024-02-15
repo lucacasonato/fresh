@@ -1,12 +1,12 @@
 import { fetchHtml, runBuild, withFakeServe, withFresh } from "./test_utils.ts";
 import {
   assert,
+  assertEquals,
   assertStringIncludes,
   dirname,
   join,
   TextLineStream,
 } from "./deps.ts";
-import { assertEquals } from "$std/assert/assert_equals.ts";
 
 Deno.test("TailwindCSS - dev mode", async () => {
   await withFakeServe("./tests/fixture_tailwind/dev.ts", async (server) => {
@@ -120,5 +120,38 @@ Deno.test("TailwindCSS - missing snapshot on Deno Deploy", async () => {
         "Finish setting up Fresh",
       );
     },
+  );
+});
+
+Deno.test("TailwindCSS - dev mode - styles.css from plugin", async () => {
+  await withFakeServe(
+    "./tests/fixture_plugin_staticfile/dev.ts",
+    async (server) => {
+      const res = await server.get("/styles.css");
+      const content = await res.text();
+      assertStringIncludes(content, ".text-red-600");
+
+      const res2 = await server.get("/styles.css?foo=bar");
+      const content2 = await res2.text();
+      assert(!content2.includes("@tailwind"));
+    },
+    { loadConfig: true },
+  );
+});
+
+Deno.test("TailwindCSS - dev mode - user overrides styles.css from plugin", async () => {
+  await withFakeServe(
+    "./tests/fixture_plugin_staticfile_override/dev.ts",
+    async (server) => {
+      const res = await server.get("/styles.css");
+      const content = await res.text();
+      assertStringIncludes(content, ".text-red-600");
+      assertStringIncludes(content, ".asdf");
+
+      const res2 = await server.get("/styles.css?foo=bar");
+      const content2 = await res2.text();
+      assert(!content2.includes("@tailwind"));
+    },
+    { loadConfig: true },
   );
 });
