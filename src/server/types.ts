@@ -578,6 +578,8 @@ export interface PluginRoute {
 
   // deno-lint-ignore no-explicit-any
   handler?: Handler<any, any> | Handlers<any, any>;
+
+  config?: RouteConfig;
 }
 
 export interface PluginIslands {
